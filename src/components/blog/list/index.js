@@ -41,6 +41,12 @@ export default function BlogListComponent({ getAllBlogs }) {
             >
               Delete Blog
             </button>
+            <button
+              onClick={() => router.push(`/blog-list/${b._id}`)}
+              className="border border-gray-700 p-1 bg-gray-700 text-white "
+            >
+              View Blog Details
+            </button>
           </div>
         ))
       ) : (
