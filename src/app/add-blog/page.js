@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const initialFormData = {
@@ -10,7 +11,22 @@ const initialFormData = {
 export default function AddBlog() {
   const [blog, setBlog] = useState(initialFormData);
 
-  console.log(blog);
+  const router = useRouter();
+
+  async function handleAddBlog() {
+    const response = await fetch("/api/blog/add-new-blog", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(blog),
+    });
+    const result = await response.json();
+    console.log(result);
+    if (result?.success) {
+      setBlog(initialFormData);
+      router.push("/blog-list");
+    }
+  }
+
   return (
     <div className="flex min-h-screen flex-col p-8">
       <h1 className="font-bold text-lg mb-3">Add a new blog</h1>
@@ -21,7 +37,7 @@ export default function AddBlog() {
             className="border border-gray-700 p-3 outline-none"
             name="title"
             placeholder="Enter blog title"
-            value={blog["title"]}
+            value={blog.title}
             onChange={(e) => setBlog({ ...blog, title: e.target.value })}
           />
         </div>
@@ -32,12 +48,15 @@ export default function AddBlog() {
             className="border border-gray-700 p-3 outline-none"
             name="title"
             placeholder="Enter blog description"
-            value={blog["description"]}
+            value={blog.description}
             onChange={(e) => setBlog({ ...blog, description: e.target.value })}
           />
         </div>
         <div>
-          <button className="border rounded-md radius-3 border-gray-700 p-3 bg-gray-700 text-white ">
+          <button
+            onClick={handleAddBlog}
+            className="border rounded-md radius-3 border-gray-700 p-3 bg-gray-700 text-white "
+          >
             Add Blog
           </button>
         </div>
