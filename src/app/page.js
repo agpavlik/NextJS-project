@@ -13,7 +13,7 @@ export default function Home() {
           onClick={() => router.push("/blog-list")}
           className="border border-gray-700 p-1 bg-gray-700 text-white "
         >
-          Vissit All Blogs
+          Visit All Blogs
         </button>
         <button
           onClick={() => router.push("/add-blog")}

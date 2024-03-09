@@ -1,12 +1,12 @@
 import connectDB from "@/database";
 import Blog from "@/models/blog";
-import { connect } from "mongoose";
+import { NextResponse } from "next/server";
 
 export async function GET(req) {
   try {
     await connectDB();
 
-    const { searhParams } = new URL(req.url);
+    const { searchParams } = new URL(req.url);
     const currentBlogId = searchParams.get("id");
 
     if (!currentBlogId) {
